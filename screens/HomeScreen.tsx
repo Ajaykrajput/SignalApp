@@ -20,7 +20,7 @@ Auth.signOut();
         renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
         showsVerticalScrollIndicator={false}
       />
-      <Pressable onPress={Logout} style={{backgroundColor: 'red', height: 50, margin: 10, borderRadius: 10, justifyContent: 'center', alignItems: 'center'}}><Text>LogOut</Text></Pressable>
+      {/* <Pressable onPress={Logout} style={{backgroundColor: 'red', height: 50, margin: 10, borderRadius: 10, justifyContent: 'center', alignItems: 'center'}}><Text>LogOut</Text></Pressable> */}
     </View>
   );
 }

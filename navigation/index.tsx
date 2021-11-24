@@ -9,6 +9,7 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  useNavigation,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
@@ -36,6 +37,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import HomeScreen from "../screens/HomeScreen";
+import UsersScreen from "../screens/UsersScreen";
 
 export default function Navigation({
   colorScheme,
@@ -71,6 +73,11 @@ function RootNavigator() {
         component={ChatRoomScreen}
         options={{ headerTitle: ChatRoomHeader, headerBackTitleVisible: false }}
       />
+      <Stack.Screen
+        name="UsersScreen"
+        component={UsersScreen}
+        options={{ title: "Users" }}
+      />
       {/* <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} /> */}
       <Stack.Screen
         name="NotFound"
@@ -86,6 +93,7 @@ function RootNavigator() {
 
 const HomeHeader = (props) => {
   const { width } = useWindowDimensions();
+  const navigation = useNavigation()
   return (
     <View
       style={{ flexDirection: "row", justifyContent: "space-between", width, padding: 10, alignItems: 'center' }}
@@ -98,7 +106,9 @@ const HomeHeader = (props) => {
       />
       <Text style={{ flex: 1, textAlign: 'center', marginLeft: 40, fontWeight:'bold' }}>Signal</Text>
       <Feather name="camera" size={24} color="black" style={{marginHorizontal: 10}}/>
-      <Feather name="edit-2" size={24} color="black" style={{marginHorizontal: 10}}/>
+      <Pressable onPress={() => navigation.navigate('UsersScreen')}> 
+        <Feather name="edit-2" size={24} color="black" style={{marginHorizontal: 10}}/>
+      </Pressable>
     </View>
   );
 };
