@@ -38,6 +38,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import ChatRoomScreen from "../screens/ChatRoomScreen";
 import HomeScreen from "../screens/HomeScreen";
 import UsersScreen from "../screens/UsersScreen";
+import ChatRoomHeader from "./ChatRoomHeader";
 
 export default function Navigation({
   colorScheme,
@@ -71,7 +72,10 @@ function RootNavigator() {
       <Stack.Screen
         name="ChatRoom"
         component={ChatRoomScreen}
-        options={{ headerTitle: ChatRoomHeader, headerBackTitleVisible: false }}
+        options={({ route }) => ({
+          headerTitle: () => <ChatRoomHeader id={route.params?.id} />,
+          headerBackTitleVisible: false,
+        })}
       />
       <Stack.Screen
         name="UsersScreen"
@@ -93,10 +97,16 @@ function RootNavigator() {
 
 const HomeHeader = (props) => {
   const { width } = useWindowDimensions();
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   return (
     <View
-      style={{ flexDirection: "row", justifyContent: "space-between", width, padding: 10, alignItems: 'center' }}
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width,
+        padding: 10,
+        alignItems: "center",
+      }}
     >
       <Image
         source={{
@@ -104,30 +114,30 @@ const HomeHeader = (props) => {
         }}
         style={{ width: 30, height: 30, borderRadius: 15 }}
       />
-      <Text style={{ flex: 1, textAlign: 'center', marginLeft: 40, fontWeight:'bold' }}>Signal</Text>
-      <Feather name="camera" size={24} color="black" style={{marginHorizontal: 10}}/>
-      <Pressable onPress={() => navigation.navigate('UsersScreen')}> 
-        <Feather name="edit-2" size={24} color="black" style={{marginHorizontal: 10}}/>
+      <Text
+        style={{
+          flex: 1,
+          textAlign: "center",
+          marginLeft: 40,
+          fontWeight: "bold",
+        }}
+      >
+        Signal
+      </Text>
+      <Feather
+        name="camera"
+        size={24}
+        color="black"
+        style={{ marginHorizontal: 10 }}
+      />
+      <Pressable onPress={() => navigation.navigate("UsersScreen")}>
+        <Feather
+          name="edit-2"
+          size={24}
+          color="black"
+          style={{ marginHorizontal: 10 }}
+        />
       </Pressable>
-    </View>
-  );
-};
-
-const ChatRoomHeader = (props) => {
-  const { width } = useWindowDimensions();
-  return (
-    <View
-      style={{ flexDirection: "row", justifyContent: "space-between", width: width - 35, padding: 10, marginLeft: -40, alignItems: 'center' }}
-    >
-      <Image
-        source={{
-          uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg",
-        }}
-        style={{ width: 30, height: 30, borderRadius: 15 }}
-      />
-      <Text style={{ flex: 1, marginLeft: 10, fontWeight:'bold' }}>{props.children}</Text>
-      <Feather name="camera" size={24} color="black" style={{marginHorizontal: 10}}/>
-      <Feather name="edit-2" size={24} color="black" style={{marginHorizontal: 10}}/>
     </View>
   );
 };
