@@ -122,7 +122,7 @@ const MessageInput = ({ chatRoom }) => {
       quality: 1,
     });
 
-    console.log(result);
+    // console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
@@ -218,6 +218,7 @@ const MessageInput = ({ chatRoom }) => {
         audio: key,
         userID: user.attributes.sub,
         chatroomID: chatRoom.id,
+        status: "SENT",
       })
     );
     updateLastMessage(newMessage);

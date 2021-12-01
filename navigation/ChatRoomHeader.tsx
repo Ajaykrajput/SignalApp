@@ -7,7 +7,7 @@ import { ChatRoomUser, User } from "../src/models";
 const ChatRoomHeader = ({ id, children }) => {
   const { width } = useWindowDimensions();
   const [user, setUser] = useState<User | null>(null);
-  console.log(id);
+  // console.log(id);
   useEffect(() => {
     if (!id) {
       return;
