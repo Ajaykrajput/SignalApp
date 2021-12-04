@@ -17,6 +17,9 @@ import { ChatRoom } from "../src/models";
 
 export default function ChatRoomScreen() {
   const [messages, setMessages] = useState<MessageModel[]>([]);
+  const [messageReplyTo, setMessageReplyTo] = useState<MessageModel | null>(
+    null
+  );
   const [chatRoom, setChatRoom] = useState<ChatRoom | null>(null);
   const route = useRoute();
   const navigation = useNavigation();
@@ -33,7 +36,7 @@ export default function ChatRoomScreen() {
     const subscription = DataStore.observe(MessageModel).subscribe((msg) => {
       // console.log(msg.model, msg.opType, msg.element);
       if (msg.model === MessageModel && msg.opType === "INSERT") {
-        setMessages((existingMessage)  => [msg.element, ...existingMessage]);
+        setMessages((existingMessage) => [msg.element, ...existingMessage]);
       }
     });
     return () => subscription.unsubscribe();
@@ -76,10 +79,19 @@ export default function ChatRoomScreen() {
     <SafeAreaView style={styles.page}>
       <FlatList
         data={messages}
-        renderItem={({ item }) => <Message message={item} />}
+        renderItem={({ item }) => (
+          <Message
+            message={item}
+            setAsMessageReply={() => setMessageReplyTo(item)}
+          />
+        )}
         inverted
       />
-      <MessageInput chatRoom={chatRoom} />
+      <MessageInput
+        chatRoom={chatRoom}
+        messageReplyTo={messageReplyTo}
+        removeMessageReplyTo={() => setMessageReplyTo(null)}
+      />
     </SafeAreaView>
   );
 }

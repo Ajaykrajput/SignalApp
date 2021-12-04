@@ -14,18 +14,14 @@ import { S3Image } from "aws-amplify-react-native";
 import AudioPlayer from "../AudioPlayer";
 import { Ionicons } from "@expo/vector-icons";
 import { Message as MessageModel } from "../../src/models";
-import MessageReply from "../MessageReply";
 
 const blue = "#3777f0";
 const grey = "lightgrey";
 
-const Message = (props) => {
-  const { setAsMessageReply, message: propMessage } = props;
+const MessageReply = (props) => {
+  const { message: propMessage } = props;
 
   const [message, setMessage] = useState<MessageModel>(props.message);
-  const [repliedTo, setRepliedTo] = useState<MessageModel | undefined>(
-    undefined
-  );
   const [user, setUser] = useState<User | undefined>();
   const [isMe, setIsMe] = useState<boolean | null>(null);
   const [soundURI, setSoundURI] = useState<any>(null);
@@ -39,29 +35,6 @@ const Message = (props) => {
   useEffect(() => {
     setMessage(propMessage);
   }, [propMessage]);
-
-  useEffect(() => {
-    if (message?.replyToMessageID) {
-      DataStore.query(MessageModel, message.replyToMessageID).then(
-        setRepliedTo
-      );
-    }
-  }, [message]);
-
-  useEffect(() => {
-    const subscription = DataStore.observe(MessageModel, message.id).subscribe(
-      (msg) => {
-        if (msg.model === MessageModel && msg.opType === "UPDATE") {
-          setMessage((message) => ({ ...message, ...msg.element }));
-        }
-      }
-    );
-    return () => subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    setAsRead();
-  }, [isMe, message]);
 
   useEffect(() => {
     if (message.audio) {
@@ -80,29 +53,19 @@ const Message = (props) => {
     checkIfMe();
   }, [user]);
 
-  const setAsRead = async () => {
-    if (isMe === false && message.status !== "READ") {
-      await DataStore.save(
-        MessageModel.copyOf(message, (updated) => {
-          updated.status = "READ";
-        })
-      );
-    }
-  };
 
   if (!user) {
     return <ActivityIndicator />;
   }
   return (
-    <Pressable
-      onLongPress={setAsMessageReply}
+    <View
+      // onLongPress={setAsMessageReply}
       style={[
         styles.container,
         isMe ? styles.rightContainer : styles.leftContainer,
         { width: soundURI ? "75%" : "auto" },
       ]}
     >
-      {repliedTo && <MessageReply message={repliedTo} />}
       <View style={styles.row}>
         {message.image && (
           <View style={{ marginBottom: message.content ? 10 : 0 }}>
@@ -130,7 +93,7 @@ const Message = (props) => {
           />
         )}
       </View>
-    </Pressable>
+    </View>
   );
 };
 
@@ -168,4 +131,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Message;
+export default MessageReply;
