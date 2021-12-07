@@ -22,6 +22,6 @@
       }
     },
     "apiName": "SignalApp",
-    "gqlSchemaPath": "/tmp/amplify-cb3a199f-ebfd-4549-837b-a8e267eb370e/amplify/backend/api/SignalApp/schema.graphql"
+    "gqlSchemaPath": "/tmp/amplify-445c79ec-2403-4002-9776-8caf125e56ab/amplify/backend/api/SignalApp/schema.graphql"
   }
 }

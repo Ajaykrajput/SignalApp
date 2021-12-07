@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 import styles from "./styles";
 import { DataStore, Auth } from "aws-amplify";
 import { ChatRoomUser, User, Message } from "../../src/models";
-import moment from 'moment';
+import moment from "moment";
 
 export default function ChatRoomItem({ chatRoom }) {
   // const [users, setUsers] = useState<User[]>([]); // all users in this chatroom
@@ -51,7 +51,7 @@ export default function ChatRoomItem({ chatRoom }) {
     <Pressable onPress={onPress} style={styles.container}>
       <Image
         source={{
-          uri: user.imageUri,
+          uri: chatRoom.imageUri || user.imageUri,
         }}
         style={styles.image}
       />
@@ -62,7 +62,7 @@ export default function ChatRoomItem({ chatRoom }) {
       )}
       <View style={styles.rightContainer}>
         <View style={styles.row}>
-          <Text style={styles.name}>{user.name}</Text>
+          <Text style={styles.name}>{chatRoom.name || user.name}</Text>
           <Text style={styles.text}>{time}</Text>
         </View>
         <Text numberOfLines={1} ellipsizeMode="tail" style={styles.text}>
