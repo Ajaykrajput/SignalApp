@@ -39,6 +39,8 @@ import ChatRoomScreen from "../screens/ChatRoomScreen";
 import HomeScreen from "../screens/HomeScreen";
 import UsersScreen from "../screens/UsersScreen";
 import ChatRoomHeader from "./ChatRoomHeader";
+import GroupInfoScreen from "../screens/GroupInfoScreen";
+import SettingsScreen from "../screens/Settings";
 
 export default function Navigation({
   colorScheme,
@@ -77,11 +79,13 @@ function RootNavigator() {
           headerBackTitleVisible: false,
         })}
       />
+      <Stack.Screen name="GroupInfoScreen" component={GroupInfoScreen} />
       <Stack.Screen
         name="UsersScreen"
         component={UsersScreen}
         options={{ title: "Users" }}
       />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
       {/* <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} /> */}
       <Stack.Screen
         name="NotFound"
@@ -124,12 +128,14 @@ const HomeHeader = (props) => {
       >
         Signal
       </Text>
-      <Feather
-        name="camera"
-        size={24}
-        color="black"
-        style={{ marginHorizontal: 10 }}
-      />
+      <Pressable onPress={() => navigation.navigate("Settings")}>
+        <Feather
+          name="settings"
+          size={24}
+          color="black"
+          style={{ marginHorizontal: 10 }}
+        />
+      </Pressable>
       <Pressable onPress={() => navigation.navigate("UsersScreen")}>
         <Feather
           name="edit-2"

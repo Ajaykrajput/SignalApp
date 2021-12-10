@@ -10,9 +10,24 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { Message, User } from "./src/models";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import moment from "moment";
+import { box } from "tweetnacl";
+import { generateKeyPair, encrypt, decrypt } from "./utils/crypto";
 
 Amplify.configure(config);
+
+// setPRNG(PRNG);
+
+// console.log(randomBytes(secretbox.nonceLength));
+const obj = { hello: 'world' };
+const pairA = generateKeyPair();
+const pairB = generateKeyPair();
+const sharedA = box.before(pairB.publicKey, pairA.secretKey);
+const encrypted = encrypt(sharedA, obj);
+const sharedB = box.before(pairA.publicKey, pairB.secretKey);
+const decrypted = decrypt(sharedB, encrypted);
+console.log(obj, encrypted, decrypted);
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -99,7 +114,9 @@ function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
+        <ActionSheetProvider>
+          <Navigation colorScheme={colorScheme} />
+        </ActionSheetProvider>
         <StatusBar />
       </SafeAreaProvider>
     );
