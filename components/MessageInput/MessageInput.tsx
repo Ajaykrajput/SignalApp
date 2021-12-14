@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  Alert,
 } from "react-native";
 import {
   SimpleLineIcons,
@@ -17,16 +18,25 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import { DataStore } from "@aws-amplify/datastore";
-import { Message } from "../../src/models";
+import { ChatRoom, Message } from "../../src/models";
 import { Auth, Storage } from "aws-amplify";
-import { ChatRoom } from "../../src/models";
 import EmojiSelector from "react-native-emoji-selector";
 import * as ImagePicker from "expo-image-picker";
-import "react-native-get-random-values";
+// import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { Audio, AVPlaybackStatus } from "expo-av";
 import AudioPlayer from "../AudioPlayer";
 import MessageComponent from "../Message";
+import { ChatRoomUser } from "../../src/models";
+// import { AsyncStorage } from "@aws-amplify/core";
+
+import { useNavigation } from "@react-navigation/core";
+import { box } from "tweetnacl";
+import {
+  encrypt,
+  stringToUint8Array,
+  getMySecretKey,
+} from "../../utils/crypto";
 
 const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
   const [message, setMessage] = useState("");
@@ -35,6 +45,8 @@ const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
   const [progerss, setProgress] = useState(0);
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [soundURI, setSoundURI] = useState<string | null>(null);
+
+  const navigation = useNavigation();
   //   console.warn(message);
 
   useEffect(() => {
@@ -54,17 +66,56 @@ const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
     })();
   }, []);
 
-  const sendMessage = async () => {
-    const user = await Auth.currentAuthenticatedUser();
+  const sendMessageToUser = async (user, fromUserId) => {
+    // send message
+    const ourSecretKey = await getMySecretKey();
+    if (!ourSecretKey) {
+      return;
+    }
+
+    if (!user.publicKey) {
+      Alert.alert(
+        "Your user have'nt set his keypair yet",
+        "Untill the user generates the keypair, you cannot securly send him message yet."
+      );
+      return;
+    }
+    console.log("private key", ourSecretKey);
+    const sharedKey = box.before(
+      stringToUint8Array(user.publicKey),
+      ourSecretKey
+    );
+    console.log("Shared key", sharedKey);
+
+    const encryptedMessage = encrypt(sharedKey, { message });
+    console.log("encrypted message", encryptedMessage);
+
     const newMessage = await DataStore.save(
       new Message({
-        content: message,
-        userID: user.attributes.sub,
+        content: encryptedMessage, // <- This message should be encrypted
+        userID: fromUserId,
+        forUserId: user.id,
         chatroomID: chatRoom.id,
         replyToMessageID: messageReplyTo?.id,
       })
     );
-    updateLastMessage(newMessage);
+    // updateLastMessage(newMessage);
+  };
+
+  const sendMessage = async () => {
+    // get all the users of chatroom
+    const authUser = await Auth.currentAuthenticatedUser();
+    const users = (await DataStore.query(ChatRoomUser))
+      .filter((cru) => cru.chatroom.id === chatRoom.id)
+      .map((cru) => cru.user);
+
+    console.log("users", users);
+
+    // for each user, encrypt the 'content' with public key, and save it as a new message
+    await Promise.all(
+      users.map((user) => sendMessageToUser(user, authUser.attributes.sub))
+    );
+
     resetFields();
   };
 
@@ -107,7 +158,7 @@ const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.5,
     });
 
     // console.log(result);
@@ -215,6 +266,7 @@ const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
       progressCallback,
     });
 
+    // send message
     const user = await Auth.currentAuthenticatedUser();
     const newMessage = await DataStore.save(
       new Message({

@@ -20,7 +20,7 @@ Amplify.configure(config);
 // setPRNG(PRNG);
 
 // console.log(randomBytes(secretbox.nonceLength));
-const obj = { hello: 'world' };
+const obj = { hello: "world" };
 const pairA = generateKeyPair();
 const pairB = generateKeyPair();
 const sharedA = box.before(pairB.publicKey, pairA.secretKey);
@@ -28,11 +28,12 @@ const encrypted = encrypt(sharedA, obj);
 const sharedB = box.before(pairA.publicKey, pairB.secretKey);
 const decrypted = decrypt(sharedB, encrypted);
 console.log(obj, encrypted, decrypted);
+console.log("Apptsx decrypted", decrypted);
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  const [user, setUser] = useState<User | null>(null);
 
   // Auth.currentAuthenticatedUser().then(console.log);
 
@@ -78,9 +79,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      console.log("UPdate Last Online");
-      updateLastOnline();
+    const interval = setInterval(async () => {
+      // console.log("UPdate Last Online");
+      await updateLastOnline();
     }, 1 * 60 * 1000);
     return () => clearInterval(interval);
   }, [user]);

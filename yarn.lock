@@ -226,7 +226,7 @@
     "@aws-sdk/util-utf8-browser" "^1.0.0-alpha.0"
     tslib "^1.9.3"
 
-"@aws-crypto/sha256-js@2.0.0", "@aws-crypto/sha256-js@^2.0.0":
+"@aws-crypto/sha256-js@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@aws-crypto/sha256-js/-/sha256-js-2.0.0.tgz#f1f936039bdebd0b9e2dd834d65afdc2aac4efcb"
   integrity sha512-VZY+mCY4Nmrs5WGfitmNqXzaE873fcIZDu54cbaDaaamsaTOP1DBImV9F4pICc3EHjQXujyE8jig+PFCaew9ig==
@@ -241,6 +241,15 @@
   integrity sha512-Nr1QJIbW/afYYGzYvrF70LtaHrIRtd4TNAglX8BvlfxJLZ45SAmueIKYl5tWoNBPzp65ymXGFK0Bb1vZUpuc9g==
   dependencies:
     "@aws-crypto/util" "^1.2.2"
+    "@aws-sdk/types" "^3.1.0"
+    tslib "^1.11.1"
+
+"@aws-crypto/sha256-js@^2.0.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-crypto/sha256-js/-/sha256-js-2.0.1.tgz#79e1e6cf61f652ef2089c08d471c722ecf1626a9"
+  integrity sha512-mbHTBSPBvg6o/mN/c18Z/zifM05eJrapj5ggoOIeHIWckvkv5VgGi7r/wYpt+QAO2ySKXLNvH2d8L7bne4xrMQ==
+  dependencies:
+    "@aws-crypto/util" "^2.0.1"
     "@aws-sdk/types" "^3.1.0"
     tslib "^1.11.1"
 
@@ -267,10 +276,10 @@
     "@aws-sdk/util-utf8-browser" "^3.0.0"
     tslib "^1.11.1"
 
-"@aws-crypto/util@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@aws-crypto/util/-/util-2.0.0.tgz#17ba6f83c7e447b70fc24b84c5f6714d1e329f4a"
-  integrity sha512-YDooyH83m2P5A3h6lNH7hm6mIP93sU/dtzRmXIgtO4BCB7SvtX8ysVKQAE8tVky2DQ3HHxPCjNTuUe7YoAMrNQ==
+"@aws-crypto/util@^2.0.0", "@aws-crypto/util@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@aws-crypto/util/-/util-2.0.1.tgz#976cf619cf85084ca85ec5eb947a6ac6b8b5c98c"
+  integrity sha512-JJmFFwvbm08lULw4Nm5QOLg8+lAQeC8aCXK5xrtxntYzYXCGfHwUJ4Is3770Q7HmICsXthGQ+ZsDL7C2uH3yBQ==
   dependencies:
     "@aws-sdk/types" "^3.1.0"
     "@aws-sdk/util-utf8-browser" "^3.0.0"
@@ -2995,10 +3004,10 @@
     xcode "^3.0.1"
     xml2js "^0.4.23"
 
-"@expo/config-plugins@4.0.11", "@expo/config-plugins@^4.0.2":
-  version "4.0.11"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.11.tgz#2c11c63ec0d3f7a56d6cb45c8340a1546f3cfc5c"
-  integrity sha512-hoQq+B1NlIqWeSLKbQQ19g2vzqKhXh2glRwRFCGvqKT2/UaweFU5w7jetNPOBlVIV1+TpQmhLNbTYako6Z3vnQ==
+"@expo/config-plugins@4.0.12", "@expo/config-plugins@^4.0.2":
+  version "4.0.12"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-4.0.12.tgz#9e1ac9f3fdb0415c6bc567533652d36ff49aa13d"
+  integrity sha512-rHIzkfWtIF62QXaVww0f6hYhxGogAAwhdLmxDNYoyQ+GTKKCVm77rpbpOuSFbojBY0AQv72TwVt36a5qtwFArA==
   dependencies:
     "@expo/config-types" "^43.0.1"
     "@expo/json-file" "8.2.34"
@@ -3044,13 +3053,13 @@
     slugify "^1.3.4"
     sucrase "^3.20.0"
 
-"@expo/config@6.0.11":
-  version "6.0.11"
-  resolved "https://registry.yarnpkg.com/@expo/config/-/config-6.0.11.tgz#a00815ac29c13dfb069441dff6f0b56da69baa2f"
-  integrity sha512-ohmm/fjpqL3mk1Tj9BqmeoFuGNQxfMm2cQs0JHqBCXTjBUtprrH1j6wHdKR2ctNWQxpOlStPkC6CgPv+bd1+GA==
+"@expo/config@6.0.12":
+  version "6.0.12"
+  resolved "https://registry.yarnpkg.com/@expo/config/-/config-6.0.12.tgz#77ff348c09f27852865436c5c0ef4e15ba358001"
+  integrity sha512-I2LRUBuvAoiy78WyT254k1tlNYmlbbVQ4Iz/NvAmEDg95CT0C7oLGyfH5YVOxpNnt5GAqNH8NlDXsyhY4IB6+A==
   dependencies:
     "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "4.0.11"
+    "@expo/config-plugins" "4.0.12"
     "@expo/config-types" "^43.0.1"
     "@expo/json-file" "8.2.34"
     getenv "^1.0.0"
@@ -3139,16 +3148,17 @@
     xmlbuilder "^14.0.0"
 
 "@expo/prebuild-config@^3.0.6":
-  version "3.0.11"
-  resolved "https://registry.yarnpkg.com/@expo/prebuild-config/-/prebuild-config-3.0.11.tgz#362d647b695bc377d8a5dc95788b2b3e00754f5a"
-  integrity sha512-RVtbTVgHGh2JSCng9xuvJAbvBW3pAWUvJLAbEkNqV/+mb2uPjDumXtyxcUfHSNX0Yjbtxw6LG61v6SNzGkfWlA==
+  version "3.0.12"
+  resolved "https://registry.yarnpkg.com/@expo/prebuild-config/-/prebuild-config-3.0.12.tgz#0e0746d8a4ac77b88148652a3ee69d4e25167c9c"
+  integrity sha512-14BWnPwQZMw7xMud94UJflkyIpVg5kMy9SxJH6TbncaH+nXbpmcb919QabRbRp5fBx1kgzA3WHw/eIN2+xfa9A==
   dependencies:
-    "@expo/config" "6.0.11"
-    "@expo/config-plugins" "4.0.11"
+    "@expo/config" "6.0.12"
+    "@expo/config-plugins" "4.0.12"
     "@expo/config-types" "^43.0.1"
     "@expo/image-utils" "0.3.18"
     "@expo/json-file" "8.2.34"
     debug "^4.3.1"
+    expo-modules-autolinking "~0.4.0"
     fs-extra "^9.0.0"
     resolve-from "^5.0.0"
     semver "7.3.2"
@@ -3578,9 +3588,9 @@
     wcwidth "^1.0.1"
 
 "@react-native-community/netinfo@^7.1.2":
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-7.1.4.tgz#611e4e0644d300e2e8b24f41cef05bdb26a078ad"
-  integrity sha512-78zQ4e9k36eGIityJCDd6W9bLg28QbHcbKyj/0vHU6rdUclCdeChZsCOtiLZ21l2q9j4F6bvoP8N5W53o3Jduw==
+  version "7.1.5"
+  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-7.1.5.tgz#65c07505b1b211275b77879f4234c7a0ee67a2de"
+  integrity sha512-ang81EGRileiqrwWCHkrIBuxrhl0ocWIWYPMTHox3c6L1tDZkhtk8PkNRMWkDWsEQHLF/A0vR3DV4dSYCC/gxQ==
 
 "@react-native-community/toolbar-android@^0.2.1":
   version "0.2.1"
@@ -5053,9 +5063,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.896:
-  version "1.4.14"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.14.tgz#b0aa41fbfbf2eff8c2c6f7a871c03075250f8956"
-  integrity sha512-RsGkAN9JEAYMObS72kzUsPPcPGMqX1rBqGuXi9aa4TBKLzICoLf+DAAtd0fVFzrniJqYzpby47gthCUoObfs0Q==
+  version "1.4.16"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.16.tgz#38ddecc616385e6f101359d1b978c802664157d2"
+  integrity sha512-BQb7FgYwnu6haWLU63/CdVW+9xhmHls3RCQUFiV4lvw3wimEHTVcUk2hkuZo76QhR8nnDdfZE7evJIZqijwPdA==
 
 emittery@^0.7.1:
   version "0.7.2"
@@ -5345,6 +5355,17 @@ expo-modules-autolinking@~0.3.4:
     find-up "~5.0.0"
     fs-extra "^9.1.0"
 
+expo-modules-autolinking@~0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/expo-modules-autolinking/-/expo-modules-autolinking-0.4.0.tgz#ad6e52ee42dd0e40a494693d763fa4bf2248c012"
+  integrity sha512-GRGHbQ4b/aOtEup/oA6YVS7OOBKqU4sNLhoiTkEJWXmYDRERZiRvp8N2krQtn54y5PqucftqlBrMbdCinTouqg==
+  dependencies:
+    chalk "^4.1.0"
+    commander "^7.2.0"
+    fast-glob "^3.2.5"
+    find-up "^5.0.0"
+    fs-extra "^9.1.0"
+
 expo-modules-core@~0.4.4, expo-modules-core@~0.4.6, expo-modules-core@~0.4.7, expo-modules-core@~0.4.9:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-0.4.9.tgz#e808ca8a70c4ac0da2cfc7040e48a4c67aeee5b3"
@@ -5604,9 +5625,9 @@ find-up@^5.0.0, find-up@~5.0.0:
     path-exists "^4.0.0"
 
 flow-parser@0.*:
-  version "0.166.1"
-  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.166.1.tgz#6869ab40bd71e1129053f53435864b08616d57e9"
-  integrity sha512-7iJ1cPcOYL/eOPGpGPaxwW8MytKGeXSnfvJA0uIvymXI4MnjjhZLWz1qPIqj2hfYJ7p/yXssbv7k2H3C90cyDw==
+  version "0.167.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.167.0.tgz#78c6a49b2e1aee2735674780c4706c162f9d33f9"
+  integrity sha512-45pjy35viRuzShVdidJi7lk6e+Koa6jmbL1zvl14zVh0nDH2UiIcV3tvunCqwm06r8cK9BUIlKkupxWQpCuTog==
 
 flow-parser@^0.121.0:
   version "0.121.0"

@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
-  Text,
-  View,
   StyleSheet,
   FlatList,
   SafeAreaView,
   ActivityIndicator,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/core";
-import { DataStore, SortDirection } from "@aws-amplify/datastore";
-import { Message as MessageModel } from "../src/models";
+import { DataStore, SortDirection, Auth } from "aws-amplify";
+import { ChatRoom, Message as MessageModel } from "../src/models";
 import Message from "../components/Message";
 // import chatRoomData from "../assets/dummy-data/Chats";
 import MessageInput from "../components/MessageInput";
-import { ChatRoom } from "../src/models";
 
 export default function ChatRoomScreen() {
   const [messages, setMessages] = useState<MessageModel[]>([]);
@@ -50,7 +47,7 @@ export default function ChatRoomScreen() {
     const chatRoom = await DataStore.query(ChatRoom, route.params.id);
     // console.log(chatRoom);
     if (!chatRoom) {
-      console.error("coul'd find a chatroom with this id ");
+      console.error("could'nt find a chatroom with this id ");
     } else {
       setChatRoom(chatRoom);
     }
@@ -60,9 +57,12 @@ export default function ChatRoomScreen() {
     if (!chatRoom) {
       return;
     }
+    const authUser = await Auth.currentAuthenticatedUser();
+    const myId = authUser.attributes.sub;
+
     const fetchedMessages = await DataStore.query(
       MessageModel,
-      (message) => message.chatroomID("eq", chatRoom?.id),
+      (message) => message.chatroomID("eq", chatRoom?.id).forUserId("eq", myId),
       { sort: (message) => message.createdAt(SortDirection.DESCENDING) }
     );
     // console.log(fetchedMessages);

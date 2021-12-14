@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  Image,
-  View,
-  StyleSheet,
-  FlatList,
-  Pressable,
-} from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { Auth, DataStore } from "aws-amplify";
 import ChatRoomItem from "../components/ChatRoomItem";
 // import chatRoomsData from "../assets/dummy-data/ChatRooms";
@@ -29,7 +22,6 @@ export default function TabOneScreen() {
     fetchChatRooms();
   }, []);
 
-  
   return (
     <View style={styles.page}>
       <FlatList
@@ -37,7 +29,6 @@ export default function TabOneScreen() {
         renderItem={({ item }) => <ChatRoomItem chatRoom={item} />}
         showsVerticalScrollIndicator={false}
       />
-      
     </View>
   );
 }

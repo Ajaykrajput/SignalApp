@@ -17,6 +17,12 @@ import AudioPlayer from "../AudioPlayer";
 import { Ionicons } from "@expo/vector-icons";
 import { Message as MessageModel } from "../../src/models";
 import MessageReply from "../MessageReply";
+import { box } from "tweetnacl";
+import {
+  getMySecretKey,
+  decrypt,
+  stringToUint8Array,
+} from "../../utils/crypto";
 
 const blue = "#3777f0";
 const grey = "lightgrey";
@@ -24,7 +30,8 @@ const grey = "lightgrey";
 const Message = (props) => {
   const { setAsMessageReply, message: propMessage } = props;
 
-  const [message, setMessage] = useState<MessageModel>(props.message);
+  const [message, setMessage] = useState<MessageModel>(propMessage);
+  const [decryptedContent, setDecryptedContent] = useState("");
   const [repliedTo, setRepliedTo] = useState<MessageModel | undefined>(
     undefined
   );
@@ -88,6 +95,28 @@ const Message = (props) => {
     };
     checkIfMe();
   }, [user]);
+
+  useEffect(() => {
+    if (!message?.content || !user?.publicKey) {
+      return;
+    }
+
+    const decryptMessage = async () => {
+      const myKey = await getMySecretKey();
+      if (!myKey) {
+        return;
+      }
+      // decrypt message.content
+      const sharedKey = box.before(stringToUint8Array(user.publicKey), myKey);
+      console.log("sharedKey", sharedKey);
+      const decrypted = decrypt(sharedKey, message.content);
+      console.log("decrypted", decrypted);
+      setDecryptedContent(decrypted.message);
+      console.log("setDecryptedContent", setDecryptedContent)
+    };
+    decryptMessage();
+    console.log("decryptMessage", decryptMessage);
+  }, [message, user]);
 
   const setAsRead = async () => {
     if (isMe === false && message.status !== "READ") {
@@ -171,9 +200,9 @@ const Message = (props) => {
           </View>
         )}
         {soundURI && <AudioPlayer soundURI={soundURI} />}
-        {!!message.content && (
+        {!!decryptedContent && (
           <Text style={{ color: isMe ? "black" : "white" }}>
-            {isDeleted ? "message deleted" : message.content}
+            {isDeleted ? "message deleted" : decryptedContent}
           </Text>
         )}
         {isMe && !!message.status && message.status !== "SENT" && (
@@ -220,9 +249,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     alignItems: "flex-end",
   },
-  text: {
-    color: "white",
-  },
+  // text: {
+  //   color: "white",
+  // },
 });
 
 export default Message;
