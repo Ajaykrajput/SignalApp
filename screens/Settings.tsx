@@ -16,7 +16,7 @@ const Settings = () => {
   const updateKeyPair = async () => {
     // genrate public/private key
     const { publicKey, secretKey } = generateKeyPair();
-    console.log(publicKey, secretKey);
+    // console.log(publicKey, secretKey);
     
     //save private key to async storage
     await AsyncStorage.setItem(PRIVATE_KEY, secretKey.toString());
@@ -36,7 +36,7 @@ const Settings = () => {
         updated.publicKey = publicKey.toString();
       })
     );
-    console.log(dbUser);
+    // console.log(dbUser);
     Alert.alert("Successfully updated the KeyPair");
   };
 

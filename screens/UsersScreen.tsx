@@ -56,7 +56,7 @@ export default function UsersScreen() {
       Admin: dbUser,
     };
     if (users.length > 1) {
-      newChatRoomData.name = "New group ";
+      newChatRoomData.name = "New group";
       newChatRoomData.imageUri =
         "https://signalappefaadbff23cd460e9f9346ac184ab736154529-staging.s3.amazonaws.com/public/New+Group.png";
     }

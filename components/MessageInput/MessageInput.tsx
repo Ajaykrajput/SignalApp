@@ -80,15 +80,15 @@ const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
       );
       return;
     }
-    console.log("private key", ourSecretKey);
+    // console.log("private key", ourSecretKey);
     const sharedKey = box.before(
       stringToUint8Array(user.publicKey),
       ourSecretKey
     );
-    console.log("Shared key", sharedKey);
+    // console.log("Shared key", sharedKey);
 
     const encryptedMessage = encrypt(sharedKey, { message });
-    console.log("encrypted message", encryptedMessage);
+    // console.log("encrypted message", encryptedMessage);
 
     const newMessage = await DataStore.save(
       new Message({
@@ -109,7 +109,7 @@ const MessageInput = ({ chatRoom, messageReplyTo, removeMessageReplyTo }) => {
       .filter((cru) => cru.chatroom.id === chatRoom.id)
       .map((cru) => cru.user);
 
-    console.log("users", users);
+    // console.log("users", users);
 
     // for each user, encrypt the 'content' with public key, and save it as a new message
     await Promise.all(

@@ -112,10 +112,8 @@ const Message = (props) => {
       const decrypted = decrypt(sharedKey, message.content);
       console.log("decrypted", decrypted);
       setDecryptedContent(decrypted.message);
-      console.log("setDecryptedContent", setDecryptedContent)
     };
     decryptMessage();
-    console.log("decryptMessage", decryptMessage);
   }, [message, user]);
 
   const setAsRead = async () => {

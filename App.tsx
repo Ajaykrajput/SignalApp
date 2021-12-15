@@ -28,7 +28,6 @@ const encrypted = encrypt(sharedA, obj);
 const sharedB = box.before(pairA.publicKey, pairB.secretKey);
 const decrypted = decrypt(sharedB, encrypted);
 console.log(obj, encrypted, decrypted);
-console.log("Apptsx decrypted", decrypted);
 
 function App() {
   const isLoadingComplete = useCachedResources();
@@ -38,7 +37,7 @@ function App() {
   // Auth.currentAuthenticatedUser().then(console.log);
 
   useEffect(() => {
-    console.log("registring listener");
+    // console.log("registring listener");
     const listener = Hub.listen("datastore", async (hubData) => {
       const { event, data } = hubData.payload;
       // if (event === "networkStatus") {
